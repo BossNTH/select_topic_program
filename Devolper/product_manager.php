@@ -1,3 +1,6 @@
+<?php
+include("../connect.php") ;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +33,7 @@
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="index.php"><i class="fa fa-sign-out"></i> ออกจากระบบ</a>
+          <a class="nav-link" href="login.php"><i class="fa fa-sign-out"></i> ออกจากระบบ</a>
         </li>
       </ul>
     </div>

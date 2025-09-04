@@ -1,3 +1,6 @@
+<?php
+include("../connect.php") ;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,7 +52,7 @@
     </form>
 
     <div class="text-link">
-      <span>มีบัญชีแล้ว? <a href="index.php">เข้าสู่ระบบ</a></span>
+      <span>มีบัญชีแล้ว? <a href="login.php">เข้าสู่ระบบ</a></span>
     </div>
   </div>
 

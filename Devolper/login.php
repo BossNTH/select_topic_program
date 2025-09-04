@@ -1,3 +1,7 @@
+<?php
+  include("../connect.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +22,7 @@
   <div class="system-title">ระบบจัดซื้อสินค้าของบริษัทมหาชนจำกัด</div>
 
   <!-- แบบฟอร์ม Login -->
-  <form action="adMenu.php" method="post">
+  <form action="../check_login.php" method="post">
     <div class="login-container">
       <i class="fas fa-user-circle"></i>
       <h2>Sign In</h2>
@@ -45,9 +49,11 @@
       </div>
 
       <button type="submit" class="btn btn-login">Login</button>
-      <div style="margin-top: 15px; text-align: center;">
-  <a href="register.php" class="btn btn-outline-primary">register</a>
-</div>
+      
+      <div class="mb-3 text-end">
+      <a href="register.php" class="btn btn-link text-primary text-decoration-underline">register</a>
+      </div>
+
     </div>
   </form>
 
