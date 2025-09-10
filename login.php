@@ -1,5 +1,5 @@
 <?php
-  include("../connect.php");
+  include("connect.php");
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +22,7 @@
   <div class="system-title">ระบบจัดซื้อสินค้าของบริษัทมหาชนจำกัด</div>
 
   <!-- แบบฟอร์ม Login -->
-  <form action="../check_login.php" method="post">
+  <form action="check_login.php" method="post">
     <div class="login-container">
       <i class="fas fa-user-circle"></i>
       <h2>Sign In</h2>

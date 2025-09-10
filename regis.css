@@ -1,0 +1,162 @@
+/* register.css | Modern Glassmorphism Style */
+
+:root {
+  --bg-gradient: linear-gradient(135deg, #3b82f6, #9333ea);
+  --card-bg: rgba(255, 255, 255, 0.15);
+  --card-border: rgba(255, 255, 255, 0.3);
+  --text: #f9fafb;
+  --muted: #d1d5db;
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --radius: 16px;
+}
+
+/* ---------- Base ---------- */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  color: var(--text);
+}
+
+/* ---------- Card ---------- */
+.register-container {
+  width: 100%;
+  max-width: 420px;
+  padding: 24px 22px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Heading ---------- */
+.register-container h2 {
+  font-size: 1.4rem;
+  text-align: center;
+  margin-bottom: 18px;
+  font-weight: 600;
+}
+
+/* ---------- Labels & Inputs ---------- */
+.form-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.input-group {
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(6px);
+  transition: border-color 0.2s ease;
+}
+
+.input-group:focus-within {
+  border-color: var(--primary);
+}
+
+.input-group-text {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  min-width: 42px;
+  text-align: center;
+}
+
+.form-control, textarea.form-control {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  padding: 10px;
+  font-size: 0.9rem;
+}
+
+.form-control::placeholder,
+textarea.form-control::placeholder {
+  color: rgba(255,255,255,0.6);
+}
+
+/* ---------- Divider ---------- */
+hr {
+  border: 0;
+  height: 1px;
+  background: rgba(255,255,255,0.2);
+  margin: 18px 0;
+}
+
+h5 {
+  font-size: 1rem;
+  margin-bottom: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* ---------- Button ---------- */
+.btn-register {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #fff;
+  background: var(--primary);
+  transition: background 0.2s ease, transform 0.1s ease;
+  margin-top: 6px;
+  box-shadow: 0 4px 12px rgba(59,130,246,0.3);
+}
+
+.btn-register:hover {
+  background: var(--primary-dark);
+}
+
+.btn-register:active {
+  transform: scale(0.98);
+}
+
+/* ---------- Footer Link ---------- */
+.text-link {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.text-link a {
+  color: #fff;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 400px) {
+  .register-container {
+    padding: 18px 16px;
+  }
+  .form-control, textarea.form-control {
+    font-size: 0.85rem;
+  }
+  .btn-register {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}
