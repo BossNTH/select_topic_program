@@ -89,7 +89,7 @@ $totalDepartments = count($departments);
             </div>
             <div class="toolbar">
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addDeptModal">
-                <i class="bi bi-building-add me-1"></i> เพิ่มแผนก
+                    <i class="bi bi-building-add me-1"></i> เพิ่มแผนก
                 </button>
 
 
@@ -303,10 +303,30 @@ $totalDepartments = count($departments);
                 }
             });
         }
+        document.addEventListener('DOMContentLoaded', () => {
+            const modalEl = document.getElementById('addDeptModal');
+            const form = document.getElementById('addDeptForm');
+            if (!modalEl || !form) return;
+
+            const input = form.querySelector('input[name="dept_name"]');
+
+            modalEl.addEventListener('shown.bs.modal', () => {
+                if (input) {
+                    input.value = '';
+                    input.focus();
+                }
+                form.classList.remove('was-validated');
+            });
+
+            // กันการส่งฟอร์มว่างจากการกด Enter
+            form.addEventListener('keydown', e => {
+                if (e.key === 'Enter' && (!input || !input.value.trim())) e.preventDefault();
+            });
+        });
     })();
     </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
