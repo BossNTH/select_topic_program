@@ -4,7 +4,7 @@ include("../connect.php");
 
 $dept_name = $_POST['dept_name'];
 
-$sql = "INSERT INTO departments (dept_name) VALUES (?)";
+$sql = "INSERT INTO departments (department_name) VALUES (?)";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $dept_name);
 

@@ -42,7 +42,7 @@ $totalProductTypes = scalar_or_zero($conn, "SELECT COUNT(*) FROM {$TABLE_PRODUCT
 
 // จำนวนสมาชิกทั้งหมด (ถ้าคือ users ทั้งหมด ให้ใช้ COUNT(*) ตรง ๆ)
 // ถ้าสมาชิกคือกลุ่ม role ใด ๆ เฉพาะ ให้ใส่ WHERE role IN (...)
-$totalMembers = scalar_or_zero($conn, "SELECT COUNT(*) FROM {$TABLE_USERS}");
+$totalMembers = scalar_or_zero($conn, "SELECT COUNT(*) FROM users WHERE role='seller'");
 
 // ยอดขายรวม (ถ้าไม่มีตาราง/คอลัมน์นี้จะได้ 0 อัตโนมัติ)
 $totalSales = scalar_or_zero($conn, "SELECT COUNT(*) FROM {$TABLE_USERS}");
@@ -84,10 +84,10 @@ $totalSales = scalar_or_zero($conn, "SELECT COUNT(*) FROM {$TABLE_USERS}");
     <nav class="col-md-2 d-none d-md-block sidebar">
       <h4 class="text-center mb-4 pt-2"><i class="fa fa-gauge-high me-2"></i>Dashboard</h4>
       <a href="employeeManagement.php"><i class="fa fa-users me-2"></i>พนักงาน</a>
-      <a href="department_add.php"><i class="fa fa-building me-2"></i>แผนก</a>
-      <a href="product_type_add.php"><i class="fa fa-box me-2"></i>ประเภทสินค้า</a>
-      <a href="payment_type_add.php"><i class="fa fa-money-bill me-2"></i>ประเภทการจ่าย</a>
-      <a href="member_list.php"><i class="fa fa-user-tie me-2"></i>สมาชิก</a>
+      <a href="departmentManagement.php"><i class="fa fa-building me-2"></i>แผนก</a>
+      <a href=""><i class="fa fa-box me-2"></i>ประเภทสินค้า</a>
+      <a href=""><i class="fa fa-money-bill me-2"></i>ประเภทการจ่าย</a>
+      <a href=""><i class="fa fa-user-tie me-2"></i>สมาชิก</a>
       <hr>
       <a href="../logout.php" class="text-warning"><i class="fa fa-sign-out-alt me-2"></i>ออกจากระบบ</a>
     </nav>
