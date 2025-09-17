@@ -12,6 +12,9 @@ $dept_sql = "SELECT department_id, department_name FROM departments ORDER BY dep
 if ($res = $conn->query($dept_sql)) {
   while ($row = $res->fetch_assoc()) $departments[] = $row;
 }
+
+require __DIR__ . '/partials/admin_header.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="th">
@@ -37,21 +40,13 @@ if ($res = $conn->query($dept_sql)) {
     .required:after{ content:" *"; color:#dc3545; }
   </style>
 </head>
-<body class="container py-4">
+<body>
 
   <!-- Header -->
   <div class="page-head d-flex justify-content-between align-items-center mb-4">
     <div>
       <h2 class="mb-1"><i class="bi bi-person-plus me-2"></i>เพิ่มพนักงาน</h2>
       <div class="small opacity-75">กรอกข้อมูลพื้นฐานของพนักงานให้ครบถ้วน</div>
-    </div>
-    <div class="d-flex gap-2">
-      <a href="employeeManagement.php" class="btn btn-light btn-sm">
-        <i class="bi bi-arrow-left me-1"></i> กลับหน้าจัดการพนักงาน
-      </a>
-      <a href="dashboard.php" class="btn btn-outline-light btn-sm">
-        <i class="bi bi-speedometer2 me-1"></i> แดชบอร์ด
-      </a>
     </div>
   </div>
 
@@ -151,3 +146,4 @@ if ($res = $conn->query($dept_sql)) {
   </script>
 </body>
 </html>
+<?php require __DIR__ . '/partials/admin_footer.php'; ?>

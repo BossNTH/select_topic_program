@@ -22,6 +22,9 @@ $departments = [];
 if ($dres = $conn->query("SELECT department_id, department_name FROM departments ORDER BY department_name")) {
   while ($d = $dres->fetch_assoc()) $departments[] = $d;
 }
+
+require __DIR__ . '/partials/admin_header.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="th">
@@ -98,9 +101,6 @@ if ($dres = $conn->query("SELECT department_id, department_name FROM departments
             <div class="toolbar">
                 <a href="employee_add.php" class="btn btn-success">
                     <i class="bi bi-person-plus me-1"></i> เพิ่มพนักงาน
-                </a>
-                <a href="dashboard.php" class="btn btn-outline-secondary">
-                    <i class="bi bi-speedometer2 me-1"></i> กลับแดชบอร์ด
                 </a>
             </div>
         </div>
@@ -245,3 +245,4 @@ if ($dres = $conn->query("SELECT department_id, department_name FROM departments
 </body>
 
 </html>
+<?php require __DIR__ . '/partials/admin_footer.php'; ?>

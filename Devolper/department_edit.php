@@ -51,6 +51,9 @@ if ($st = $conn->prepare($sqlEmp)) {
   $st->close();
 }
 $stmt->close();
+
+require __DIR__ . '/partials/admin_header.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="th">
@@ -76,21 +79,13 @@ $stmt->close();
     .table thead th.sticky { position:sticky; top:0; z-index:2; }
   </style>
 </head>
-<body class="container py-4">
+<body>
 
   <!-- Header -->
   <div class="page-head d-flex justify-content-between align-items-center mb-4">
     <div>
       <h2 class="mb-1"><i class="bi bi-building-gear me-2"></i>แก้ไขแผนก</h2>
       <div class="small opacity-75">ปรับชื่อแผนก และตั้งหัวหน้าแผนกจากรายชื่อพนักงาน</div>
-    </div>
-    <div class="d-flex gap-2">
-      <a href="departmentManagement.php" class="btn btn-light btn-sm">
-        <i class="bi bi-arrow-left me-1"></i> กลับหน้าจัดการแผนก
-      </a>
-      <a href="dashboard.php" class="btn btn-outline-light btn-sm">
-        <i class="bi bi-speedometer2 me-1"></i> แดชบอร์ด
-      </a>
     </div>
   </div>
 

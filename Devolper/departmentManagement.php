@@ -27,6 +27,9 @@ $res = $conn->query($sql);
 $departments = [];
 while ($row = $res->fetch_assoc()) $departments[] = $row;
 $totalDepartments = count($departments);
+
+require __DIR__ . '/partials/admin_header.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="th">
@@ -65,9 +68,6 @@ $totalDepartments = count($departments);
       <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addDeptModal">
         <i class="bi bi-building-add me-1"></i> เพิ่มแผนก
       </button>
-      <a href="dashboard.php" class="btn btn-outline-secondary">
-        <i class="bi bi-speedometer2 me-1"></i> กลับแดชบอร์ด
-      </a>
     </div>
   </div>
 
@@ -282,3 +282,4 @@ $totalDepartments = count($departments);
 
 </body>
 </html>
+<?php require __DIR__ . '/partials/admin_footer.php'; ?>
