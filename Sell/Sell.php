@@ -1,10 +1,15 @@
 <?php
-// vendor.php : ระบบจัดซื้อสำหรับผู้ขาย
+session_start();
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'seller') {
+    header("Location: ../login.php");
+    exit();
+}
+require_once("../connect.php");
 ?>
 
 <!DOCTYPE html>
 <html lang="th">
-<head>
+<head> 
     <meta charset="UTF-8">
     <title>ระบบจัดซื้อ - ผู้ขาย</title>
     <!-- Bootstrap CSS -->
@@ -43,7 +48,7 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-custom">
     <div class="container-fluid">
-        <a class="navbar-brand fw-bold" href="vendor.php">ระบบจัดซื้อ (ผู้ขาย)</a>
+        <a class="navbar-brand fw-bold" href="Sell.php">ระบบจัดซื้อ (ผู้ขาย)</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
                 data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" 
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -73,6 +78,26 @@
 <div class="container mt-4">
     <h3 class="fw-bold">ยินดีต้อนรับ ผู้ขาย</h3>
     <p class="text-muted">เลือกเมนู "จัดการสำหรับผู้ขาย" ด้านบนเพื่อดูคำขอซื้อหรือตอบกลับด้วยการเสนอราคา</p>
+    <div class="row mt-4">
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">ดูรายการขอซื้อ (PR)</h5>
+                    <p class="card-text">ตรวจสอบรายการขอซื้อที่ลูกค้าส่งเข้ามา และดูรายละเอียดแต่ละรายการ</p>
+                    <a href="purchase_requests.php" class="btn btn-primary">ดูรายการขอซื้อ</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">จัดการใบเสนอราคา</h5>
+                    <p class="card-text">สร้างและจัดการใบเสนอราคาสำหรับแต่ละคำขอซื้อที่ได้รับ</p>
+                    <a href="quotation.php" class="btn btn-success">จัดการใบเสนอราคา</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Bootstrap JS -->
