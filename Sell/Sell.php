@@ -1,106 +1,34 @@
-<?php
-session_start();
+<?php 
+if (session_status() === PHP_SESSION_NONE) session_start();
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'seller') {
-    header("Location: ../login.php");
-    exit();
+  header("Location: ../login.php"); exit();
 }
-require_once("../connect.php");
-?>
+require_once __DIR__ . "/../connect.php";
+require_once __DIR__ . "/partials/seller_header.php";
+ ?>
 
-<!DOCTYPE html>
-<html lang="th">
-<head> 
-    <meta charset="UTF-8">
-    <title>ระบบจัดซื้อ - ผู้ขาย</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* ปรับสี Navbar */
-        .navbar-custom {
-            background-color: #4a90e2; /* ฟ้าอมเทา */
-        }
-        .navbar-custom .navbar-brand,
-        .navbar-custom .nav-link,
-        .navbar-custom .dropdown-toggle {
-            color: #fff !important;
-        }
-        /* Hover แล้วเปลี่ยนเป็นสีชัด */
-        .navbar-custom .nav-link:hover,
-        .navbar-custom .dropdown-toggle:hover {
-            color: #ffdd57 !important; /* เหลืองนุ่ม */
-        }
+<h3 class="fw-bold mb-1">ยินดีต้อนรับ ผู้ขาย</h3>
+<p class="text-muted">เลือกเมนูทางซ้ายเพื่อดูคำขอซื้อหรือจัดทำใบเสนอราคา</p>
 
-        /* Dropdown */
-        .dropdown-menu {
-            border-radius: 10px;
-        }
-        .dropdown-menu .dropdown-item {
-            color: #333; /* ตัวหนังสือสีเทาเข้ม */
-        }
-        .dropdown-menu .dropdown-item:hover {
-            background-color: #e6f0ff; /* พื้นหลังฟ้าอ่อน */
-            color: #003366; /* ตัวหนังสือสีกรม ไม่หาย */
-        }
-    </style>
-</head>
-<body class="bg-light">
-
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-custom">
-    <div class="container-fluid">
-        <a class="navbar-brand fw-bold" href="Sell.php">ระบบจัดซื้อ (ผู้ขาย)</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" 
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-
-                <!-- Dropdown -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        จัดการสำหรับผู้ขาย
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="purchase_requests.php">ดูรายการขอซื้อ</a></li>
-                        <li><a class="dropdown-item" href="quotation.php">จัดการเสนอราคา</a></li>
-                    </ul>
-                </li>
-
-            </ul>
-        </div>
+<div class="row g-3 mt-2">
+  <div class="col-lg-6">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="card-title"><i class="bi bi-list-check me-1"></i> ดูรายการขอซื้อ (PR)</h5>
+        <p class="card-text text-muted">ตรวจสอบรายการขอซื้อที่ลูกค้าส่งเข้ามา และดูรายละเอียดแต่ละรายการ</p>
+        <a href="purchase_requests.php" class="btn btn-primary">ดูรายการขอซื้อ</a>
+      </div>
     </div>
-</nav>
-
-<!-- เนื้อหา -->
-<div class="container mt-4">
-    <h3 class="fw-bold">ยินดีต้อนรับ ผู้ขาย</h3>
-    <p class="text-muted">เลือกเมนู "จัดการสำหรับผู้ขาย" ด้านบนเพื่อดูคำขอซื้อหรือตอบกลับด้วยการเสนอราคา</p>
-    <div class="row mt-4">
-        <div class="col-md-6 mb-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">ดูรายการขอซื้อ (PR)</h5>
-                    <p class="card-text">ตรวจสอบรายการขอซื้อที่ลูกค้าส่งเข้ามา และดูรายละเอียดแต่ละรายการ</p>
-                    <a href="purchase_requests.php" class="btn btn-primary">ดูรายการขอซื้อ</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 mb-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">จัดการใบเสนอราคา</h5>
-                    <p class="card-text">สร้างและจัดการใบเสนอราคาสำหรับแต่ละคำขอซื้อที่ได้รับ</p>
-                    <a href="quotation.php" class="btn btn-success">จัดการใบเสนอราคา</a>
-                </div>
-            </div>
-        </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="card-title"><i class="bi bi-receipt-cutoff me-1"></i> จัดการใบเสนอราคา</h5>
+        <p class="card-text text-muted">สร้างและจัดการใบเสนอราคาสำหรับแต่ละคำขอซื้อที่ได้รับ</p>
+        <a href="quotation.php" class="btn btn-success">จัดการใบเสนอราคา</a>
+      </div>
     </div>
+  </div>
 </div>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<?php require_once __DIR__ . "/partials/seller_footer.php"; ?>

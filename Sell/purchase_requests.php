@@ -29,6 +29,8 @@ $sql = "SELECT pr.pr_no, pr.request_date, pr.need_by_date, pr.status, e.full_nam
         ORDER BY pr.request_date DESC";
 $stmt = $pdo->query($sql);
 $prs = $stmt->fetchAll();
+
+require_once __DIR__ . "/partials/seller_header.php";
 ?>
 
 <!DOCTYPE html>
@@ -38,25 +40,9 @@ $prs = $stmt->fetchAll();
     <title>รายการขอซื้อ (PR) - ผู้ขาย</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="bg-light">
+<body>
 
-<nav class="navbar navbar-expand-lg navbar-custom" style="background-color: #4a90e2;">
-    <div class="container-fluid">
-        <a class="navbar-brand fw-bold text-white" href="Sell.php">ระบบจัดซื้อ (ผู้ขาย)</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="purchase_requests.php">ดูรายการขอซื้อ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="quotation.php">จัดการเสนอราคา</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<div class="container mt-4">
+<div>
     <h3 class="fw-bold mb-3">รายการขอซื้อ (Purchase Requisition)</h3>
     <?php if (count($prs) === 0): ?>
         <div class="alert alert-info">ยังไม่มีรายการขอซื้อที่รอเสนอราคา</div>
@@ -102,4 +88,4 @@ $prs = $stmt->fetchAll();
     <?php endif ?>
 </div>
 
-<script src=
+<?php require_once __DIR__ . "/partials/seller_footer.php"; ?>
