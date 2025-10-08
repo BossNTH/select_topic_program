@@ -32,6 +32,7 @@ if (!$ok) {
     exit();
 }
 
+
 // ถ้าล็อกอินผ่านและยังเป็น plain text ให้ "อัปเกรด" เป็น hash ทันที
 if (!$is_hash) {
     $newHash = password_hash($password, PASSWORD_DEFAULT);
@@ -48,9 +49,9 @@ $_SESSION['role']     = $row['role'];
 switch ($row['role']) {
     case 'admin':            header("Location: Devolper/dashboard.php"); break;
     case 'manager':          header("Location: Devolper/managerMenu.php"); break;
-    case 'employee':         header("Location: Devolper/empMenu.php"); break;
+    case 'employee':         header("Location: Employee/staff_dashboard.php"); break;
     case 'seller':           header("Location: Sell/Sell.php"); break;
-    case 'procurement':      header("Location: Devolper/procurementMenu.php"); break;
+    case 'procurement':      header("Location: Procurement/procurement.php"); break;
     case 'product_manager':  header("Location: Devolper/product_manager.php"); break;
     case 'project_manager':  header("Location: Devolper/proManagerMenu.php"); break;
     default:

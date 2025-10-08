@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 11, 2025 at 09:25 AM
+-- Generation Time: Sep 25, 2025 at 08:48 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,10 +38,10 @@ CREATE TABLE `departments` (
 --
 
 INSERT INTO `departments` (`department_id`, `department_name`, `head_employee_id`) VALUES
-(1, 'ทั่วไป', NULL),
-(2, 'บัญชี', NULL),
-(3, 'คลังสินค้า', NULL),
-(4, 'การตลาด', NULL);
+(1, 'ทั่วไป', 3),
+(2, 'บัญชี', 3),
+(3, 'คลังสินค้า', 6),
+(5, 'การตลาด', NULL);
 
 -- --------------------------------------------------------
 
@@ -64,9 +64,9 @@ CREATE TABLE `employees` (
 --
 
 INSERT INTO `employees` (`employee_id`, `full_name`, `phone`, `email`, `status`, `department_id`, `employee_code`) VALUES
-(3, 'ทำไป ทำไม', '0982363025', 'thampai.m@gmail.com', 'active', 1, 'EMP-003'),
+(3, 'ทำไป ทำไม', '0982363025', 'thampai.m@gmail.com', 'active', 2, 'EMP-003'),
 (4, 'ทำแล้ว ไม่ได้', '09986520125', 'thamleaw.m@gnail.com', 'active', 1, 'EMP-004'),
-(5, 'ง่วงนอน หลับในคาบ', '0816352585', 'nhuangnon.nh@gmail.com', 'inactive', 2, 'EMP-005');
+(6, 'ง่วงนอน หลับในคาบ', '0816352585', 'nhuangnon.nh@gmail.com', 'inactive', 3, 'EMP-006');
 
 -- --------------------------------------------------------
 
@@ -110,6 +110,13 @@ CREATE TABLE `product_categories` (
   `category_id` int(10) UNSIGNED NOT NULL,
   `category_name` varchar(100) NOT NULL COMMENT 'ชื่อประเภท'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_categories`
+--
+
+INSERT INTO `product_categories` (`category_id`, `category_name`) VALUES
+(1, 'Food');
 
 -- --------------------------------------------------------
 
@@ -210,7 +217,8 @@ CREATE TABLE `suppliers` (
 --
 
 INSERT INTO `suppliers` (`supplier_id`, `supplier_name`, `contact_info`, `address`, `phone`, `email`, `password_hash`, `status`) VALUES
-(1, 'สมชายร้านค้า', 'สมชาย ใจสั่น', 'มหาสาคาม', '0987654321', 'somchai.j@gmail.com', '$2y$10$DDVGRBBNzS5dm8H90AUcB.Zp06lkMs/HJ4cCAP9H3MudHv0QxVz6G', 'active');
+(1, 'สมชายร้านค้า', 'สมชาย ใจสั่น', 'มหาสาคาม', '0987654321', 'somchai.j@gmail.com', '$2y$10$DDVGRBBNzS5dm8H90AUcB.Zp06lkMs/HJ4cCAP9H3MudHv0QxVz6G', 'active'),
+(2, 'testShop', 'test', 'มหาสาคาม', '0987654654', 'test@gmail.com', '$2y$10$Sw3XEIszySGmeU/H9CBm0.VTaHMZik6aYdjDR1RABWBywnlbfvt3i', 'active');
 
 -- --------------------------------------------------------
 
@@ -232,9 +240,11 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
 (1, 'admin', '$2y$10$0/YpnZvZtYnZMvLnOJfo2eCnSKisTwtgqBGh2nGUo6xrvt05je9gG', 'admin'),
 (2, 'iamboss', '$2y$10$DDVGRBBNzS5dm8H90AUcB.Zp06lkMs/HJ4cCAP9H3MudHv0QxVz6G', 'seller'),
-(5, 'EMP-003', '$2y$10$BBZwYzVBPK9V5yTtsjjbUecys6DGnmk4EHGvBpFSifhpRKZ29wFHa', 'employee'),
-(10, 'EMP-004', '$2y$10$x2L3zH8I4ISJb.d5iA45S.zRrXNSWaT5av8lXUpN4X7P2eBuASNSK', 'employee'),
-(11, 'EMP-005', '$2y$10$glTwP0rKOgoJHXcorg/Yju6j3GJvwHheweslMZ5e1vSn5Moc/JrDe', 'employee');
+(5, 'EMP-003', '$2y$10$glTwP0rKOgoJHXcorg/Yju6j3GJvwHheweslMZ5e1vSn5Moc/JrDe', 'employee'),
+(10, 'EMP-004', '$2y$10$glTwP0rKOgoJHXcorg/Yju6j3GJvwHheweslMZ5e1vSn5Moc/JrDe', 'employee'),
+(11, 'EMP-005', '$2y$10$glTwP0rKOgoJHXcorg/Yju6j3GJvwHheweslMZ5e1vSn5Moc/JrDe', 'employee'),
+(12, 'EMP-006', '$2y$10$glTwP0rKOgoJHXcorg/Yju6j3GJvwHheweslMZ5e1vSn5Moc/JrDe', 'employee'),
+(13, 'test', '$2y$10$Sw3XEIszySGmeU/H9CBm0.VTaHMZik6aYdjDR1RABWBywnlbfvt3i', 'seller');
 
 --
 -- Indexes for dumped tables
@@ -340,13 +350,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `department_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `department_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `employee_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `employee_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -358,19 +368,19 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `product_categories`
 --
 ALTER TABLE `product_categories`
-  MODIFY `category_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `category_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `suppliers`
 --
 ALTER TABLE `suppliers`
-  MODIFY `supplier_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `supplier_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables

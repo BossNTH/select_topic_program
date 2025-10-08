@@ -1,0 +1,18 @@
+<?php
+require 'connect.php';
+
+$username = $_POST['username'];
+$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+$role     = $_POST['role']; // <<-- รับค่าที่เลือกจากฟอร์ม
+
+$sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("sss", $username, $password, $role);
+
+if ($stmt->execute()) {
+    header("Location: login.php?register=success");
+    exit();
+} else {
+    echo "Error: " . $conn->error;
+}
+?>

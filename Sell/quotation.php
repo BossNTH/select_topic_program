@@ -1,100 +1,146 @@
-
 <?php
-// quotation.php : จัดการใบเสนอราคาสำหรับผู้ขาย
-
-// ตัวอย่างการเชื่อมต่อฐานข้อมูล
-$host = 'localhost';
-$db   = 'purchase';
-$user = 'root';
-$pass = '';
-$charset = 'utf8mb4';
-
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-];
-
-try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (\PDOException $e) {
-    die("Database connection failed: " . $e->getMessage());
+// ผู้ขายจัดการใบเสนอราคา
+if (session_status() === PHP_SESSION_NONE) session_start();
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'seller') {
+  header("Location: ../login.php"); exit();
 }
-
-// ดึงใบเสนอราคาทั้งหมด (ตัวอย่าง: ทุก supplier)
-$sql = "SELECT q.quote_no, q.quote_date, q.pr_no, q.total_amount, q.status, s.supplier_name
-        FROM purchase_quotes q
-        JOIN suppliers s ON q.supplier_id = s.supplier_id
-        ORDER BY q.quote_date DESC";
-$stmt = $pdo->query($sql);
-$quotes = $stmt->fetchAll();
-
+require_once __DIR__ . "/../connect.php";
 require_once __DIR__ . "/partials/seller_header.php";
+
+// รับ filter
+$q = trim($_GET['q'] ?? '');
+$status = trim($_GET['status'] ?? '');
+$fromPr = trim($_GET['from_pr'] ?? ''); // กรณีมากดจาก PR เพื่อสร้างโควต
+
+// ตัวอย่างตาราง/คอลัมน์ (เปลี่ยนให้ตรงสคีมาจริง):
+// purchase_quotes(quote_no, pr_no, quote_date, total_amount, status)
+$sql = "SELECT quote_no, pr_no, quote_date, total_amount, status
+        FROM purchase_quotes
+        WHERE 1=1";
+$params = [];
+$types = '';
+
+if ($q !== '') { $sql.=" AND (quote_no LIKE ? OR pr_no LIKE ?)"; $params[]="%{$q}%"; $params[]="%{$q}%"; $types.="ss"; }
+if ($status !== '') { $sql.=" AND status = ?"; $params[]=$status; $types.="s"; }
+
+$sql .= " ORDER BY quote_date DESC";
+$stmt = $conn->prepare($sql);
+if ($params) { $stmt->bind_param($types, ...$params); }
+$stmt->execute();
+$rs = $stmt->get_result();
 ?>
+<style>
+  /* แถบเครื่องมือด้านบน */
+  .q-toolbar{
+    display: grid;
+    grid-template-columns: minmax(260px, 2fr) minmax(200px, 1fr) auto auto;
+    gap: 12px;
+    align-items: stretch;
+    margin-bottom: 12px;
+  }
+  .q-toolbar .form-control,
+  .q-toolbar .form-select{
+    height: 56px;              /* ให้สูงเท่ากันหมด */
+    border-radius: 14px;
+  }
+  .btn-lg-square{
+    width: 56px; height: 56px; /* ปุ่มค้นหาเป็นสี่เหลี่ยมจัตุรัส */
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 14px;
+  }
+  .btn-pill{
+    border-radius: 14px;
+    height: 56px;
+    display: inline-flex; align-items: center; gap: 8px;
+    white-space: nowrap;
+  }
 
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <title>จัดการใบเสนอราคา - ผู้ขาย</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+  /* การ์ดตาราง */
+  .table-card{ border:1px solid #eaeef5; border-radius:16px; overflow:hidden; background:#fff; }
+  .table thead th{ position: sticky; top: 0; background: #f8fafc; z-index: 1; }
+  .table td, .table th{ vertical-align: middle; }
+  .td-actions{ white-space: nowrap; }
+  .table thead th:nth-child(1){ width: 180px; }
+  .table thead th:nth-child(2){ width: 140px; }
+  .table thead th:nth-child(3){ width: 160px; }
+  .table thead th:nth-child(4){ width: 160px; }
+  .table thead th:nth-child(5){ width: 140px; }
+  .table thead th:nth-child(6){ width: 240px; }
+
+  /* ระยะขอบรวมหน้า */
+  .content{ padding: 24px; }
+
+  /* Responsive */
+  @media (max-width: 992px){
+    .q-toolbar{
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 576px){
+    .q-toolbar{
+      grid-template-columns: 1fr;
+    }
+    .btn-lg-square{ width: 100%; }
+    .btn-pill{ width: 100%; justify-content: center; }
+  }
+</style>
 
 
-<div>
-    <h3 class="fw-bold mb-3">ใบเสนอราคาทั้งหมด</h3>
-    <?php if (count($quotes) === 0): ?>
-        <div class="alert alert-info">ยังไม่มีใบเสนอราคา</div>
-    <?php else: ?>
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover bg-white">
-            <thead class="table-primary">
-                <tr>
-                    <th>เลขที่ใบเสนอราคา</th>
-                    <th>วันที่เสนอราคา</th>
-                    <th>เลขที่ขอซื้อ (PR)</th>
-                    <th>ผู้ขาย</th>
-                    <th>ยอดรวม</th>
-                    <th>สถานะ</th>
-                    <th>ดูรายละเอียด</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($quotes as $q): ?>
-                <tr>
-                    <td><?= htmlspecialchars($q['quote_no']) ?></td>
-                    <td><?= htmlspecialchars($q['quote_date']) ?></td>
-                    <td><?= htmlspecialchars($q['pr_no']) ?></td>
-                    <td><?= htmlspecialchars($q['supplier_name']) ?></td>
-                    <td><?= number_format($q['total_amount'], 2) ?></td>
-                    <td>
-                        <?php
-                        $status = [
-                            'draft' => 'ร่าง',
-                            'sent' => 'ส่งแล้ว',
-                            'received' => 'ลูกค้าได้รับ',
-                            'accepted' => 'ลูกค้าตกลง',
-                            'rejected' => 'ถูกปฏิเสธ',
-                            'expired' => 'หมดอายุ'
-                        ];
-                        echo $status[$q['status']] ?? $q['status'];
-                        ?>
-                    </td>
-                    <td>
-                        <a href="quote_detail.php?quote_no=<?= urlencode($q['quote_no']) ?>" class="btn btn-sm btn-outline-primary">
-                            รายละเอียด
-                        </a>
-                    </td>
-                </tr>
-                <?php endforeach ?>
-            </tbody>
-        </table>
-    </div>
-    <?php endif ?>
+<div class="d-flex align-items-center justify-content-between mb-2">
+  <h4 class="fw-bold mb-0"><i class="bi bi-receipt-cutoff me-2"></i>ใบเสนอราคา</h4>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+<form method="get" class="q-toolbar">
+  <input class="form-control" type="search" name="q"
+         placeholder="ค้นหา Quote/PR..." value="<?= htmlspecialchars($q) ?>">
+  <select class="form-select" name="status">
+    <option value="">สถานะทั้งหมด</option>
+    <?php
+      $opt = [
+        'draft'=>'ฉบับร่าง','sent'=>'ส่งแล้ว','received'=>'ลูกค้าได้รับ',
+        'accepted'=>'ลูกค้าตอบรับ','rejected'=>'ถูกปฏิเสธ','expired'=>'หมดอายุ'
+      ];
+      foreach($opt as $k=>$v){
+        $sel = $status===$k?'selected':'';
+        echo "<option value='{$k}' {$sel}>{$v}</option>";
+      }
+    ?>
+  </select>
+  <button class="btn btn-primary btn-lg-square" type="submit">
+    <i class="bi bi-search"></i>
+  </button>
 
-<?php require_once __DIR__ . "/partials/seller_footer.php"; ?>
+  <?php if (!empty($fromPr)): ?>
+    <a class="btn btn-success btn-pill" href="quotation_create.php?pr=<?= urlencode($fromPr) ?>">
+      <i class="bi bi-plus-lg"></i> สร้างจาก PR: <?= htmlspecialchars($fromPr) ?>
+    </a>
+  <?php else: ?>
+    <a class="btn btn-success btn-pill" href="quotation_create.php">
+      <i class="bi bi-plus-lg"></i> สร้างใบเสนอราคา
+    </a>
+  <?php endif; ?>
+</form>
+
+
+<div class="table-card">
+  <table class="table table-hover align-middle mb-0">
+    <thead class="table-light">
+      <tr>
+        <th>เลขที่ใบเสนอราคา</th>
+        <th>อ้างอิง PR</th>
+        <th>วันที่เสนอ</th>
+        <th>ยอดรวม</th>
+        <th>สถานะ</th>
+        <th class="text-end">การจัดการ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- แถวข้อมูลของคุณ -->
+    </tbody>
+  </table>
+</div>
+
+
+<?php
+$stmt->close();
+require_once __DIR__ . "/partials/seller_footer.php";
