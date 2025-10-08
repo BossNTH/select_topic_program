@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 25, 2025 at 08:48 AM
+-- Generation Time: Oct 08, 2025 at 07:40 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -244,7 +244,8 @@ INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
 (10, 'EMP-004', '$2y$10$glTwP0rKOgoJHXcorg/Yju6j3GJvwHheweslMZ5e1vSn5Moc/JrDe', 'employee'),
 (11, 'EMP-005', '$2y$10$glTwP0rKOgoJHXcorg/Yju6j3GJvwHheweslMZ5e1vSn5Moc/JrDe', 'employee'),
 (12, 'EMP-006', '$2y$10$glTwP0rKOgoJHXcorg/Yju6j3GJvwHheweslMZ5e1vSn5Moc/JrDe', 'employee'),
-(13, 'test', '$2y$10$Sw3XEIszySGmeU/H9CBm0.VTaHMZik6aYdjDR1RABWBywnlbfvt3i', 'seller');
+(13, 'test', '$2y$10$Sw3XEIszySGmeU/H9CBm0.VTaHMZik6aYdjDR1RABWBywnlbfvt3i', 'seller'),
+(14, 'proc', '$2y$10$NbpIFk04BZT3bAK1gyC.qORBaHX1ZP6v9y.bQOwmYqTLGFaY9x78W', 'procurement');
 
 --
 -- Indexes for dumped tables
@@ -380,7 +381,7 @@ ALTER TABLE `suppliers`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables
